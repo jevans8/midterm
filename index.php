@@ -22,11 +22,20 @@ $f3 = Base::instance();
 //Default route
 $f3->route('GET /', function(){
 
-    echo "<h2>Midterm Survey</h2>";
-    echo "<a href=''>Take my Midterm Survey</a>";
+    //echo "<h2>Midterm Survey</h2>";
+    //echo "<a href='survey'>Take my Midterm Survey</a>";
 
-    //$view = new Template();
-    //echo $view->render('views/home.html');
+    $view = new Template();
+    echo $view->render('views/home.html');
+
+});
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//Survey route
+$f3->route('GET|POST /survey', function(){
+
+    $view = new Template();
+    echo $view->render('views/survey.html');
 
 });
 
