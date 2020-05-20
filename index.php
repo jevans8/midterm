@@ -9,7 +9,7 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 //Start a session
-//session_start();
+session_start();
 
 //Require the autoload file
 require_once('vendor/autoload.php');
@@ -20,7 +20,8 @@ $f3 = Base::instance();
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //Default route
-$f3->route('GET /', function(){
+$f3->route('GET /', function()
+{
 
     //echo "<h2>Midterm Survey</h2>";
     //echo "<a href='survey'>Take my Midterm Survey</a>";
@@ -32,10 +33,30 @@ $f3->route('GET /', function(){
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //Survey route
-$f3->route('GET|POST /survey', function(){
+$f3->route('GET|POST /survey', function($f3)
+{
+
+    //if form has been submitted
+    if($_SERVER['REQUEST_METHOD'] == 'POST')
+    {
+        $_SESSION['name'] = $_POST['name'];
+        $_SESSION['survey'] = $_POST['survey'];
+
+        //redirect
+        $f3->reroute('summary');
+    }
 
     $view = new Template();
     echo $view->render('views/survey.html');
+
+});
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//Summary route
+$f3->route('GET|POST /summary', function(){
+
+    $view = new Template();
+    echo $view->render('views/summary.html');
 
 });
 

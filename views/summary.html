@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Midterm - Summary</title>
+</head>
+<body>
+
+<h2>Midterm Survey</h2>
+<h3>Thank you for taking the survey, {{ @SESSION.name }}!</h3>
+<br>
+<h4>Your Answers:</h4>
+<check if="isset( {{ @SESSION.survey }} )">{{ implode(@SESSION.survey, ", ") }}</check>
+
+</body>
+</html>
