@@ -8,12 +8,12 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-//Start a session
-session_start();
-
 //Require the autoload file
 require_once('vendor/autoload.php');
 //require_once('model/data.php');
+
+//Start session (AFTER requiring autoload)
+session_start();
 
 //Instantiate the framework (Base class)
 $f3 = Base::instance();
@@ -22,7 +22,6 @@ $f3 = Base::instance();
 //Default route
 $f3->route('GET /', function()
 {
-
     //echo "<h2>Midterm Survey</h2>";
     //echo "<a href='survey'>Take my Midterm Survey</a>";
 
@@ -35,11 +34,11 @@ $f3->route('GET /', function()
 //Survey route
 $f3->route('GET|POST /survey', function($f3)
 {
+    $options = array("This midterm is easy", "I like midterms", "Today is Monday");
 
     //if form has been submitted
     if($_SERVER['REQUEST_METHOD'] == 'POST')
     {
-
         //required fields
         if(empty($_POST['name']))
         {
@@ -58,8 +57,11 @@ $f3->route('GET|POST /survey', function($f3)
 
             //redirect
             $f3->reroute('summary');
-
         }
+
+        //store variables in f3 hive (to make form sticky)
+        $f3->set('name', $_POST['name']);
+        $f3->set('selections', $_POST['survey']);
 
     }
 
