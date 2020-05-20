@@ -39,11 +39,28 @@ $f3->route('GET|POST /survey', function($f3)
     //if form has been submitted
     if($_SERVER['REQUEST_METHOD'] == 'POST')
     {
-        $_SESSION['name'] = $_POST['name'];
-        $_SESSION['survey'] = $_POST['survey'];
 
-        //redirect
-        $f3->reroute('summary');
+        //required fields
+        if(empty($_POST['name']))
+        {
+            $f3->set('errors["name"]', "Required field");
+        }
+        if(empty($_POST['survey']))
+        {
+            $f3->set('errors["survey"]', "Please select at least one option");
+        }
+
+        //valid data
+        if(empty($f3->get('errors')))
+        {
+            $_SESSION['name'] = $_POST['name'];
+            $_SESSION['survey'] = $_POST['survey'];
+
+            //redirect
+            $f3->reroute('summary');
+
+        }
+
     }
 
     $view = new Template();
